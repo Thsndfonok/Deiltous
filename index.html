@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Deiltous — Minimal Depth</title>
+  <title>Deiltous</title>
   <meta name="description" content="Deiltous — a monochrome, animated landing exploring minimalism with depth. Built with semantic HTML, CSS and vanilla JS." />
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +22,8 @@
       --e-in: cubic-bezier(.65,0,.36,1);
     }
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    html { height: 100%; scroll-behavior: smooth; }
+    body { height: 100%; }
     body {
       margin: 0; background: var(--bg); color: var(--fg);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -136,10 +136,12 @@
     @media (prefers-reduced-motion: reduce) {
       .ambient-grid, .marquee .row { animation: none; }
       .reveal { transition: none; }
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
 <body>
+  <a id="top"></a>
   <div class="trail" aria-hidden="true"></div>
   <header>
     <div class="container nav">
@@ -150,8 +152,7 @@
       <nav>
         <ul>
           <li><a href="#work">Work</a></li>
-          <li><a href="#philosophy">Philosophy</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <!-- Removed Philosophy and FAQ per request -->
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -162,9 +163,9 @@
     <section class="hero">
       <div class="ambient-grid" aria-hidden="true"></div>
       <div class="container">
-        <p class="kicker reveal">Monochrome • Motion • Meaning</p>
-        <h1 class="title reveal">Depth in Minimalism<br><span class="muted">by Deiltous</span></h1>
-        <p class="subtitle reveal">We design calm, high-contrast experiences. Strictly black & white, with motion that guides—not distracts. Explore the layers beneath the surface.</p>
+        <p class="kicker reveal">Premium • Reliable • Hq quality</p>
+        <h1 class="title reveal">Deiltous<br><span class="muted">by turiaq</span></h1>
+        <p class="subtitle reveal">We selling every stuff u might be need, click on the Explore Services and see what we are listing.</p>
         <div class="cta reveal">
           <a class="btn" href="#work">Explore work ↗</a>
           <a class="btn" href="#contact">Start a project →</a>
@@ -174,22 +175,22 @@
 
     <section>
       <div class="container">
-        <h2 class="section-title reveal">Capabilities with Depth</h2>
+        <h2 class="section-title reveal">Our Services</h2>
         <div class="grid features">
           <article class="card feature reveal">
-            <span class="badge mono">01 · Systems</span>
-            <h3>Design Systems</h3>
-            <p>Consistent tokens, scale, rhythm. We ship UI kits that feel inevitable.</p>
+            <span class="badge mono">01 · Tools</span>
+            <h3>Easy use</h3>
+            <p>tools: TokenChecker, BoostBot, MailSpammer, Screen Logger.</p>
           </article>
           <article class="card feature reveal">
-            <span class="badge mono">02 · Motion</span>
-            <h3>Purposeful Animation</h3>
-            <p>Timing curves with intent. Motion reveals hierarchy, not gimmicks.</p>
+            <span class="badge mono">02 · social</span>
+            <h3>Social Boost</h3>
+            <p>We sell Tiktok followers, Instagram followers.</p>
           </article>
           <article class="card feature reveal">
-            <span class="badge mono">03 · Code</span>
-            <h3>Front‑end Craft</h3>
-            <p>Accessible, semantic, performance‑minded implementations in clean HTML/CSS/JS.</p>
+            <span class="badge mono">03 · OSINT</span>
+            <h3>Get informations</h3>
+            <p>We analyze public data about your enemy profile: audits, monitoring, footprint analysis. Only $5.</p>
           </article>
         </div>
       </div>
@@ -198,65 +199,25 @@
     <div class="marquee-wrap" aria-hidden="true">
       <div class="container marquee">
         <div class="row">
-          <span>Deiltous</span><span>Depth</span><span>Minimal</span><span>Contrast</span><span>Motion</span><span>Precision</span>
+          <span>Deiltous</span><span>Reliable</span><span>Premium</span><span>Hq quality</span><span>Motion</span><span>Precision</span>
         </div>
         <div class="row" aria-hidden="true">
-          <span>Deiltous</span><span>Depth</span><span>Minimal</span><span>Contrast</span><span>Motion</span><span>Precision</span>
+          <span>Deiltous</span><span>Reliable</span><span>Premium</span><span>Reliable</span><span>Motion</span><span>Hq quality</span>
         </div>
       </div>
     </div>
-
-    <section id="work">
-      <div class="container">
-        <h2 class="section-title reveal">Selected Work</h2>
-        <div class="grid work">
-          <a class="card project w1 reveal" href="#" aria-label="Project: Parallax surfaces">
-            <span class="badge mono">Case • 2025</span>
-            <h3>Parallax Surfaces</h3>
-            <p class="muted">Layered panels respond to scroll to hint at hierarchy without color.</p>
-            <div class="mono">Read →</div>
-          </a>
-          <a class="card project w2 reveal" href="#" aria-label="Project: Temporal grid">
-            <span class="badge mono">Experiment</span>
-            <h3>Temporal Grid</h3>
-            <p class="muted">A living grid drifts in time, aligning content with subtle cadence.</p>
-            <div class="mono">Explore →</div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section id="philosophy">
-      <div class="container philosophy">
-        <div>
-          <h2 class="section-title reveal">Philosophy</h2>
-          <p class="blockquote reveal">“Simplicity is not the absence of complexity; it is the result of mastering it.”</p>
-          <p class="reveal">Deiltous believes constraints sharpen clarity. Black and white force composition, spacing, and motion to carry meaning. Every pixel is accountable.</p>
-        </div>
-        <div class="card reveal" style="padding:22px;">
-          <h3 style="margin:0 0 8px;">Principles</h3>
-          <ul class="muted" style="margin:0; padding-left:18px;">
-            <li>Hierarchy first, decoration last.</li>
-            <li>One idea per screen.</li>
-            <li>Motion reinforces—not competes.</li>
-            <li>Accessibility is non‑negotiable.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
     <section id="faq">
       <div class="container">
         <h2 class="section-title reveal">FAQ</h2>
         <div class="accordion">
-          <details class="card reveal"><summary><strong>Do you work only in black & white?</strong></summary>
-            <div class="answer">For this series—yes. Constraints help us design with intention. Color can join later when it adds meaning.</div>
+          <details class="card reveal"><summary><strong>This is a scam?</strong></summary>
+            <div class="answer">Absolutely not, i can show proofs if thats needed.</div>
           </details>
           <details class="card reveal"><summary><strong>What about performance?</strong></summary>
-            <div class="answer">We avoid heavy libraries, use semantic HTML, compress assets, and keep animations GPU‑friendly.</div>
+            <div class="answer">We try to aim for accuracy and deliver the best.</div>
           </details>
           <details class="card reveal"><summary><strong>How do we start?</strong></summary>
-            <div class="answer">Email us with context and goals. We’ll propose a minimal path to value.</div>
+            <div class="answer">hit me up on telegram with information and product.</div>
           </details>
         </div>
       </div>
@@ -264,25 +225,24 @@
 
     <section id="contact">
       <div class="container">
-        <h2 class="section-title reveal">Start a Project</h2>
-        <form class="card reveal" style="padding:22px; display:grid; gap:12px;" onsubmit="event.preventDefault(); fakeSend(this)">
-          <label>
-            <span class="mono small">Your name</span>
-            <input required name="name" class="input" placeholder="Jane Doe" />
-          </label>
-          <label>
-            <span class="mono small">Email</span>
-            <input required type="email" name="email" class="input" placeholder="you@company.com" />
-          </label>
-          <label>
-            <span class="mono small">What do you have in mind?</span>
-            <textarea required name="message" class="input" rows="5" placeholder="Tell us about the scope, goals, and timeline."></textarea>
-          </label>
-          <button class="btn" type="submit">Send inquiry →</button>
-          <p id="form-status" class="muted" role="status" aria-live="polite"></p>
-        </form>
+        <h2 class="section-title reveal" style="text-align:center;">Hit me up if u are interested</h2>
+        <div class="card reveal" style="padding:22px; display:flex; justify-content:center; align-items:center; gap:16px;">
+          <a class="btn" href="https://t.me/xcvzcvx" target="_blank" rel="noopener" aria-label="Open Telegram profile">
+            <svg aria-hidden="true" viewBox="0 0 240 240" width="24" height="24" style="display:block">
+              <path d="M175.5 76.1l-17.6 83.1c-1.3 5.9-4.8 7.4-9.7 4.7l-27-19.9-13 12.5c-1.4 1.4-2.6 2.6-5.4 2.6l1.9-27.6 50.2-45.4c2.2-1.9-.5-3-3.4-1.1l-62 39-26.7-8.3c-5.8-1.8-5.9-5.8 1.2-8.6l104.4-40.3c4.8-1.8 9 1.2 7.4 8.5z" fill="#fff"/>
+            </svg>
+            <span>Message me on Telegram</span>
+          </a>
+          <a class="btn" href="https://t.me/+GFhsvqjZ-4dhZTJh" target="_blank" rel="noopener" aria-label="Join Telegram group">
+            <svg aria-hidden="true" viewBox="0 0 240 240" width="24" height="24" style="display:block">
+              <path d="M175.5 76.1l-17.6 83.1c-1.3 5.9-4.8 7.4-9.7 4.7l-27-19.9-13 12.5c-1.4 1.4-2.6 2.6-5.4 2.6l1.9-27.6 50.2-45.4c2.2-1.9-.5-3-3.4-1.1l-62 39-26.7-8.3c-5.8-1.8-5.9-5.8 1.2-8.6l104.4-40.3c4.8-1.8 9 1.2 7.4 8.5z" fill="#fff"/>
+            </svg>
+            <span>Join our Group</span>
+          </a>
+        </div>
       </div>
     </section>
+
   </main>
 
   <footer>
@@ -292,7 +252,7 @@
           <span class="dot" aria-hidden="true"></span>
           <span>Deiltous</span>
         </div>
-        <p class="small">© <span id="year"></span> Deiltous. Built with HTML+CSS+JS. Monochrome forever.</p>
+        <p class="small">© <span id="year"></span> Deiltous. Best forever.</p>
       </div>
       <div style="justify-self:end; text-align:right;">
         <a class="btn" href="#top" aria-label="Back to top">Back to top ↑</a>
@@ -340,16 +300,6 @@
       tx = e.clientX; ty = e.clientY; trail.style.opacity = 1; if (!raf) follow();
     });
     window.addEventListener('pointerleave', () => { trail.style.opacity = 0; cancelAnimationFrame(raf); raf = null; });
-
-    // Form stub
-    function fakeSend(form) {
-      const btn = form.querySelector('button');
-      btn.disabled = true; btn.textContent = 'Sending…';
-      setTimeout(() => {
-        btn.textContent = 'Sent ✓';
-        document.getElementById('form-status').textContent = 'Thanks! We\'ll get back to you within 1–2 business days.';
-      }, 700);
-    }
 
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
