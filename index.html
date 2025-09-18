@@ -1,0 +1,358 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deiltous — Minimal Depth</title>
+  <meta name="description" content="Deiltous — a monochrome, animated landing exploring minimalism with depth. Built with semantic HTML, CSS and vanilla JS." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --fg: #f5f5f5;
+      --muted: #bdbdbd;
+      --line: #1a1a1a;
+      --accent: #ffffff; /* use only white & black shades */
+      --radius: 18px;
+      --shadow: 0 8px 30px rgba(0,0,0,.45);
+      --e-out: cubic-bezier(.22,1,.36,1);
+      --e-in: cubic-bezier(.65,0,.36,1);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; background: var(--bg); color: var(--fg);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.5; letter-spacing: .01em;
+      overflow-x: hidden;
+    }
+    a { color: var(--fg); text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* Utility */
+    .container { width: min(1100px, 92vw); margin: 0 auto; }
+    .grid { display: grid; gap: 24px; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 18px; border: 1px solid var(--fg); border-radius: var(--radius); transition: transform .2s var(--e-out), background .2s var(--e-out); }
+    .btn:hover { transform: translateY(-2px); background: #111; }
+    .muted { color: var(--muted); }
+    .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 600; }
+    .card { border: 1px solid var(--line); border-radius: var(--radius); background: #0d0d0d; box-shadow: var(--shadow); }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,0));
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .dot { width: 10px; height: 10px; border-radius: 999px; background: var(--fg); box-shadow: 0 0 20px rgba(255,255,255,.6); }
+    .nav a { opacity: .9; }
+    .nav a:hover { opacity: 1; }
+    .nav ul { display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; }
+
+    /* Hero */
+    .hero { position: relative; padding: 120px 0 80px; border-bottom: 1px solid var(--line); overflow: hidden; }
+    .title { font-size: clamp(44px, 8vw, 76px); line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 14px; }
+    .subtitle { font-size: clamp(16px, 2.5vw, 20px); color: var(--muted); max-width: 60ch; }
+    .hero .cta { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* Ambient grid */
+    .ambient-grid {
+      position: absolute; inset: -20% -20% auto -20%; height: 120%;
+      background:
+        linear-gradient(transparent 23px, rgba(255,255,255,.05) 24px),
+        linear-gradient(90deg, transparent 23px, rgba(255,255,255,.05) 24px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1), rgba(0,0,0,0) 60%);
+      animation: drift 22s linear infinite;
+    }
+    @keyframes drift { to { transform: translate3d(-24px, -24px, 0); } }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    .section-title { font-size: clamp(24px, 4vw, 36px); margin: 0 0 24px; letter-spacing: -.02em; }
+    .kicker { text-transform: uppercase; letter-spacing: .18em; color: var(--muted); font-size: 12px; }
+
+    /* Features */
+    .features { grid-template-columns: repeat(3, 1fr); }
+    .feature { padding: 22px; position: relative; overflow: hidden; }
+    .feature::before { content: ""; position: absolute; inset: 0; background: radial-gradient(600px 120px at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.06), transparent 40%); opacity: 0; transition: opacity .3s var(--e-out); }
+    .feature:hover::before { opacity: 1; }
+    .feature h3 { margin: 8px 0 8px; font-size: 20px; }
+    .feature p { margin: 0; color: var(--muted); }
+
+    /* Depth marquee */
+    .marquee-wrap { border-block: 1px solid var(--line); background: #0b0b0b; }
+    .marquee { display: flex; gap: 24px; padding: 14px 0; white-space: nowrap; overflow: hidden; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+    .marquee span { opacity: .6; }
+    .marquee .row { display: inline-flex; gap: 24px; animation: scroll 20s linear infinite; }
+    .marquee .row:nth-child(2) { animation-duration: 28s; }
+    @keyframes scroll { to { transform: translateX(-50%); } }
+
+    /* Work */
+    .work { grid-template-columns: repeat(12, 1fr); }
+    .work .w1 { grid-column: span 5; }
+    .work .w2 { grid-column: span 7; }
+    .work .project { padding: 24px; display: grid; gap: 14px; min-height: 220px; }
+    .badge { display: inline-block; border: 1px solid var(--fg); border-radius: 999px; padding: 6px 10px; font-size: 12px; }
+
+    /* Philosophy */
+    .philosophy { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; }
+    .blockquote { font-size: clamp(18px, 3vw, 22px); color: var(--muted); border-left: 2px solid #222; padding-left: 16px; }
+
+    /* FAQ */
+    .accordion { display: grid; gap: 12px; }
+    details.card summary { cursor: pointer; padding: 18px 22px; list-style: none; }
+    details.card summary::-webkit-details-marker { display: none; }
+    details.card[open] { background: #0f0f0f; }
+    details .answer { padding: 0 22px 18px; color: var(--muted); }
+
+    /* Footer */
+    footer { padding: 60px 0; border-top: 1px solid var(--line); }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: end; }
+    .small { font-size: 12px; color: var(--muted); }
+
+    /* Reveal animations */
+    .reveal { opacity: 0; transform: translateY(18px); }
+    .reveal.in { opacity: 1; transform: translateY(0); transition: transform .7s var(--e-out), opacity .7s var(--e-out); }
+
+    /* Cursor trail (subtle, perf-friendly) */
+    .trail { position: fixed; width: 12px; height: 12px; border: 1px solid rgba(255,255,255,.5); border-radius: 999px; pointer-events: none; left: 0; top: 0; transform: translate(-50%, -50%); opacity: 0; transition: opacity .3s var(--e-out); }
+
+    /* Responsiveness */
+    @media (max-width: 900px) {
+      .features { grid-template-columns: 1fr; }
+      .work { grid-template-columns: 1fr; }
+      .philosophy { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .ambient-grid, .marquee .row { animation: none; }
+      .reveal { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="trail" aria-hidden="true"></div>
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#" aria-label="Deiltous home">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Deiltous</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#philosophy">Philosophy</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="ambient-grid" aria-hidden="true"></div>
+      <div class="container">
+        <p class="kicker reveal">Monochrome • Motion • Meaning</p>
+        <h1 class="title reveal">Depth in Minimalism<br><span class="muted">by Deiltous</span></h1>
+        <p class="subtitle reveal">We design calm, high-contrast experiences. Strictly black & white, with motion that guides—not distracts. Explore the layers beneath the surface.</p>
+        <div class="cta reveal">
+          <a class="btn" href="#work">Explore work ↗</a>
+          <a class="btn" href="#contact">Start a project →</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="section-title reveal">Capabilities with Depth</h2>
+        <div class="grid features">
+          <article class="card feature reveal">
+            <span class="badge mono">01 · Systems</span>
+            <h3>Design Systems</h3>
+            <p>Consistent tokens, scale, rhythm. We ship UI kits that feel inevitable.</p>
+          </article>
+          <article class="card feature reveal">
+            <span class="badge mono">02 · Motion</span>
+            <h3>Purposeful Animation</h3>
+            <p>Timing curves with intent. Motion reveals hierarchy, not gimmicks.</p>
+          </article>
+          <article class="card feature reveal">
+            <span class="badge mono">03 · Code</span>
+            <h3>Front‑end Craft</h3>
+            <p>Accessible, semantic, performance‑minded implementations in clean HTML/CSS/JS.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="container marquee">
+        <div class="row">
+          <span>Deiltous</span><span>Depth</span><span>Minimal</span><span>Contrast</span><span>Motion</span><span>Precision</span>
+        </div>
+        <div class="row" aria-hidden="true">
+          <span>Deiltous</span><span>Depth</span><span>Minimal</span><span>Contrast</span><span>Motion</span><span>Precision</span>
+        </div>
+      </div>
+    </div>
+
+    <section id="work">
+      <div class="container">
+        <h2 class="section-title reveal">Selected Work</h2>
+        <div class="grid work">
+          <a class="card project w1 reveal" href="#" aria-label="Project: Parallax surfaces">
+            <span class="badge mono">Case • 2025</span>
+            <h3>Parallax Surfaces</h3>
+            <p class="muted">Layered panels respond to scroll to hint at hierarchy without color.</p>
+            <div class="mono">Read →</div>
+          </a>
+          <a class="card project w2 reveal" href="#" aria-label="Project: Temporal grid">
+            <span class="badge mono">Experiment</span>
+            <h3>Temporal Grid</h3>
+            <p class="muted">A living grid drifts in time, aligning content with subtle cadence.</p>
+            <div class="mono">Explore →</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="philosophy">
+      <div class="container philosophy">
+        <div>
+          <h2 class="section-title reveal">Philosophy</h2>
+          <p class="blockquote reveal">“Simplicity is not the absence of complexity; it is the result of mastering it.”</p>
+          <p class="reveal">Deiltous believes constraints sharpen clarity. Black and white force composition, spacing, and motion to carry meaning. Every pixel is accountable.</p>
+        </div>
+        <div class="card reveal" style="padding:22px;">
+          <h3 style="margin:0 0 8px;">Principles</h3>
+          <ul class="muted" style="margin:0; padding-left:18px;">
+            <li>Hierarchy first, decoration last.</li>
+            <li>One idea per screen.</li>
+            <li>Motion reinforces—not competes.</li>
+            <li>Accessibility is non‑negotiable.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <h2 class="section-title reveal">FAQ</h2>
+        <div class="accordion">
+          <details class="card reveal"><summary><strong>Do you work only in black & white?</strong></summary>
+            <div class="answer">For this series—yes. Constraints help us design with intention. Color can join later when it adds meaning.</div>
+          </details>
+          <details class="card reveal"><summary><strong>What about performance?</strong></summary>
+            <div class="answer">We avoid heavy libraries, use semantic HTML, compress assets, and keep animations GPU‑friendly.</div>
+          </details>
+          <details class="card reveal"><summary><strong>How do we start?</strong></summary>
+            <div class="answer">Email us with context and goals. We’ll propose a minimal path to value.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title reveal">Start a Project</h2>
+        <form class="card reveal" style="padding:22px; display:grid; gap:12px;" onsubmit="event.preventDefault(); fakeSend(this)">
+          <label>
+            <span class="mono small">Your name</span>
+            <input required name="name" class="input" placeholder="Jane Doe" />
+          </label>
+          <label>
+            <span class="mono small">Email</span>
+            <input required type="email" name="email" class="input" placeholder="you@company.com" />
+          </label>
+          <label>
+            <span class="mono small">What do you have in mind?</span>
+            <textarea required name="message" class="input" rows="5" placeholder="Tell us about the scope, goals, and timeline."></textarea>
+          </label>
+          <button class="btn" type="submit">Send inquiry →</button>
+          <p id="form-status" class="muted" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:10px;">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Deiltous</span>
+        </div>
+        <p class="small">© <span id="year"></span> Deiltous. Built with HTML+CSS+JS. Monochrome forever.</p>
+      </div>
+      <div style="justify-self:end; text-align:right;">
+        <a class="btn" href="#top" aria-label="Back to top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    /* Inputs (scoped low for clarity) */
+    .input { width: 100%; margin-top: 6px; padding: 12px 14px; background: #0f0f0f; color: var(--fg); border: 1px solid #1d1d1d; border-radius: var(--radius); outline: none; transition: border-color .2s var(--e-out), transform .15s var(--e-out); }
+    .input:focus { border-color: #2e2e2e; transform: translateY(-1px); }
+  </style>
+
+  <script>
+    // Intersection-based reveal
+    const onIntersect = (entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          observer.unobserve(e.target);
+        }
+      });
+    };
+    const observer = new IntersectionObserver(onIntersect, { threshold: 0.16 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Feature spotlight follows mouse
+    document.querySelectorAll('.feature').forEach(f => {
+      f.addEventListener('pointermove', (e) => {
+        const r = f.getBoundingClientRect();
+        f.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        f.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+
+    // Cursor trail — subtle ring that fades
+    const trail = document.querySelector('.trail');
+    let raf, tx = 0, ty = 0, cx = 0, cy = 0;
+    const follow = () => {
+      cx += (tx - cx) * 0.12; cy += (ty - cy) * 0.12;
+      trail.style.transform = `translate(${cx}px, ${cy}px)`;
+      raf = requestAnimationFrame(follow);
+    };
+    window.addEventListener('pointermove', (e) => {
+      tx = e.clientX; ty = e.clientY; trail.style.opacity = 1; if (!raf) follow();
+    });
+    window.addEventListener('pointerleave', () => { trail.style.opacity = 0; cancelAnimationFrame(raf); raf = null; });
+
+    // Form stub
+    function fakeSend(form) {
+      const btn = form.querySelector('button');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      setTimeout(() => {
+        btn.textContent = 'Sent ✓';
+        document.getElementById('form-status').textContent = 'Thanks! We\'ll get back to you within 1–2 business days.';
+      }, 700);
+    }
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
